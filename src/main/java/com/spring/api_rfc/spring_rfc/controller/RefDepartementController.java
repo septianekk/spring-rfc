@@ -1,5 +1,7 @@
 package com.spring.api_rfc.spring_rfc.controller;
 
+
+import com.spring.api_rfc.spring_rfc.repo.RefDepartementRepository;
 import com.spring.api_rfc.spring_rfc.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,14 +12,14 @@ import java.util.List;
 
 @RequestMapping("/api")
 @RestController
-public class UserController {
+public class RefDepartementController {
 
     @Autowired
-    UserRepository userRepository;
+    RefDepartementRepository refDepartementRepository;
 
-    @GetMapping("users")
+    @GetMapping("departements")
     List findAll() {
-        return userRepository.findAll();
+        return refDepartementRepository.findAll();
     }
 
 }
