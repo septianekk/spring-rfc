@@ -41,11 +41,12 @@ public class AuthenticationController {
 //        return ResponseEntity.ok(loginResponse);
         try {
             LoginResponse loginResponse = authenticationService.login(loginUserDto);
+            System.out.println(loginResponse);
             return ResponseEntity.ok(loginResponse);
         } catch (AuthenticationException e) {
 //            throw new RuntimeException(e);
             System.out.println(e.getMessage());
-            throw new RuntimeException("Invalid login credentials");
+            throw new RuntimeException(e.getMessage());
         }
     }
 
