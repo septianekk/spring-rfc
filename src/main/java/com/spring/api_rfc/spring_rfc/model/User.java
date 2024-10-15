@@ -40,6 +40,8 @@ public class User implements UserDetails{
     private String status;
     private String sm_code;
     private String sm_name;
+//    @Column(name = "sm_name")
+//    private String smName;
 
     @Column(name = "password")
     private String password;

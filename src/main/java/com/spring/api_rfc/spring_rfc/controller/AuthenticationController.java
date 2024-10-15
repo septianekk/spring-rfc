@@ -27,18 +27,8 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
-//    public AuthenticationController(JwtService jwtService, AuthenticationService authenticationService) {
-//        this.jwtService = jwtService;
-//        this.authenticationService = authenticationService;
-//    }
-
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
-//        System.out.println(loginUserDto);
-//        User authenticatedUser = authenticationService.login(loginUserDto);
-//        String jwtToken = jwtService.generateToken(authenticatedUser);
-//
-//        return ResponseEntity.ok(loginResponse);
         try {
             LoginResponse loginResponse = authenticationService.login(loginUserDto);
             System.out.println(loginResponse);

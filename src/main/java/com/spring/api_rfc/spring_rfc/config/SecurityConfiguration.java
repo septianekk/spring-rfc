@@ -1,5 +1,6 @@
 package com.spring.api_rfc.spring_rfc.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -22,6 +23,7 @@ public class SecurityConfiguration {
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilterOld jwtAuthenticationFilterOld;
 
+    @Autowired
     public SecurityConfiguration(
             JwtAuthenticationFilterOld jwtAuthenticationFilterOld,
             AuthenticationProvider authenticationProvider
