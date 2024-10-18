@@ -31,7 +31,7 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
     @Override
     public ResponseEntity<Object> save(TblRequestRfc tblRequestRfc, HttpServletRequest request) {
         if (tblRequestRfc==null){
-            return GlobalFunction.validatiFailed("OBJECT NULL", "FV001001001", request);
+            return GlobalFunction.validatiFailed("Object null", "FV001001001", request);
         }
         try {
             tblRequestRfcRepository.save(tblRequestRfc);

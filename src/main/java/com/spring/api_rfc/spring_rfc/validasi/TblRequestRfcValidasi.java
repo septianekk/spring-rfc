@@ -14,8 +14,17 @@ public class TblRequestRfcValidasi {
     private Long requestId;
     @NotEmpty
     @Column(nullable = false)
+    @NotNull
+    @NotBlank
+    @NotEmpty
     private String nik;
+    @NotNull
+    @NotBlank
+    @NotEmpty
     private String nama;
+    @NotNull
+    @NotBlank
+    @NotEmpty
     private String divisi;
     @NotNull
     @NotBlank

@@ -42,7 +42,7 @@ public class GlobalFunction {
 
     public static ResponseEntity<Object> dataByIdAlreadyFound(Object object, HttpServletRequest request){
         return new ResponseHandler().generateResponse(
-                "DATA DITEMUKAN",
+                "Data ditemukan",
                 HttpStatus.OK,
                 object,
                 null,
@@ -52,7 +52,7 @@ public class GlobalFunction {
 
     public static ResponseEntity<Object> dataHasChanged(HttpServletRequest request){
         return new ResponseHandler().generateResponse(
-                "DATA BERHASIL DIUBAH",
+                "Data Berhasil diubah",
                 HttpStatus.OK,
                 null,
                 null,
