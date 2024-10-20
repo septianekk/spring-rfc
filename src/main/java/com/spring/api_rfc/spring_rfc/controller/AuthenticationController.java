@@ -29,9 +29,12 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
+//        public void authenticate(@RequestBody LoginUserDto loginUserDto) {
         try {
             LoginResponse loginResponse = authenticationService.login(loginUserDto);
-            System.out.println(loginResponse);
+//            authenticationService.login(loginUserDto);
+
+            System.out.println(loginUserDto);
             return ResponseEntity.ok(loginResponse);
         } catch (AuthenticationException e) {
 //            throw new RuntimeException(e);

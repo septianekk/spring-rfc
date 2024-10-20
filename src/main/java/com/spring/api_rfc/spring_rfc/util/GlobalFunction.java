@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public class GlobalFunction {
 
     public static ResponseEntity<Object> dataHasSaved(HttpServletRequest request){
@@ -36,6 +38,16 @@ public class GlobalFunction {
                 HttpStatus.BAD_REQUEST,
                 null,
                 "X-01-002",
+                request
+        );
+    }
+
+    public static ResponseEntity<Object> dataListFound(List<?> dataList, HttpServletRequest request) {
+        return new ResponseHandler().generateResponse(
+                "Data berhasil ditemukan",
+                HttpStatus.OK,
+                dataList,
+                null,
                 request
         );
     }
