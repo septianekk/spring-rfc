@@ -102,6 +102,26 @@ public class GlobalFunction {
         );
     }
 
+    public static ResponseEntity<Object> invalidCredential(HttpServletRequest request) {
+        return new ResponseHandler().generateResponse(
+              "Password Salah",
+                HttpStatus.UNAUTHORIZED,
+                null,
+                "401",
+                request
+        );
+    }
+
+    public static ResponseEntity<Object> successWithToken(Object object, HttpServletRequest request) {
+        return new ResponseHandler().generateResponse(
+                "Berhasil Login",
+                HttpStatus.OK,
+                object,
+                "200",
+                request
+        );
+    }
+
     /**
      *
      * Convert data
