@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -36,13 +37,15 @@ public class TblRequestRfc {
     @Lob
     @Column(name = "Dampak")
     private String dampak;
-    @CreationTimestamp
-    @Column(name = "Tgl_Request")
-    private Date tglRequest;
-    @Column(name = "Tgl_Execute")
-    private Date tglExecute;
-    @Column(name = "Tgl_Estimasi")
-    private Date tglEstimasi;
+
+    @Column(name = "Tgl_Request",insertable = true,updatable = false)
+    private LocalDateTime tglRequest;
+    @Column(name = "Tgl_Execute",insertable = false)
+    private LocalDateTime tglExecute;
+
+
+    @Column(name = "Tgl_Estimasi", insertable = false)
+    private LocalDateTime tglEstimasi;
     @Column(name = "Assign_Code", length = 8)
     private String assignCode;
     @Column(name = "Assign_Name", length = 50)
@@ -198,27 +201,27 @@ public class TblRequestRfc {
         this.dampak = dampak;
     }
 
-    public Date getTglRequest() {
+    public LocalDateTime getTglRequest() {
         return tglRequest;
     }
 
-    public void setTglRequest(Date tglRequest) {
+    public void setTglRequest(LocalDateTime tglRequest) {
         this.tglRequest = tglRequest;
     }
 
-    public Date getTglExecute() {
+    public LocalDateTime getTglExecute() {
         return tglExecute;
     }
 
-    public void setTglExecute(Date tglExecute) {
+    public void setTglExecute(LocalDateTime tglExecute) {
         this.tglExecute = tglExecute;
     }
 
-    public Date getTglEstimasi() {
+    public LocalDateTime getTglEstimasi() {
         return tglEstimasi;
     }
 
-    public void setTglEstimasi(Date tglEstimasi) {
+    public void setTglEstimasi(LocalDateTime tglEstimasi) {
         this.tglEstimasi = tglEstimasi;
     }
 

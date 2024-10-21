@@ -41,6 +41,7 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
         try {
             TblRequestRfc savedRequest = tblRequestRfcRepository.save(tblRequestRfc);
             TblRfcLogs log = new TblRfcLogs();
+
             log.setRequestId(savedRequest.getRequestId());
             log.setStatus("NEW");
             log.setCreatedBy(savedRequest.getCreatedBy()); // Assuming you have logged-in user
