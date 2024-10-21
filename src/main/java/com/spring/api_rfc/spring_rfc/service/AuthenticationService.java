@@ -63,6 +63,7 @@ public class AuthenticationService {
         loginResponse.setName(userNow.getName());
         loginResponse.setBranch(userNow.getBranch());
         loginResponse.setDivision(userNow.getDivision());
+        loginResponse.setPosition(userNow.getPosition());
         loginResponse.setDepartement(userNow.getDepartement());
         loginResponse.setUnit(userNow.getUnit());
         loginResponse.setLevel(userNow.getLevel());
