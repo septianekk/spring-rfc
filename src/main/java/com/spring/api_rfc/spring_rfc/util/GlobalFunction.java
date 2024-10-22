@@ -22,7 +22,7 @@ public class GlobalFunction {
 
     public static ResponseEntity<?> dataFailedToSave(String errorCode, HttpServletRequest request){
         return new ResponseHandler().generateResponse(
-                "DATA Gagal disimpan",
+                "Data Gagal disimpan",
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 null,
                 errorCode,
@@ -40,12 +40,32 @@ public class GlobalFunction {
         );
     }
 
+    public static ResponseEntity<Object> dataSuccesRejected(HttpServletRequest request){
+        return new ResponseHandler().generateResponse(
+                "Data Berhasil di Reject",
+                HttpStatus.OK,
+                null,
+                null,
+                request
+        );
+    }
+
     public static ResponseEntity<Object> dataByIdAlreadyFound(Object object, HttpServletRequest request){
         return new ResponseHandler().generateResponse(
                 "Data ditemukan",
                 HttpStatus.OK,
                 object,
                 null,
+                request
+        );
+    }
+
+    public static ResponseEntity<Object> failedToChange(String errorCode, HttpServletRequest request){
+        return new ResponseHandler().generateResponse(
+                "Data Gagal Validasi",
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                null,
+                errorCode,
                 request
         );
     }

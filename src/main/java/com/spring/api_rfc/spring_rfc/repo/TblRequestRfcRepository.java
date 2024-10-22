@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface TblRequestRfcRepository extends JpaRepository<TblRequestRfc, Long> {
-
+    List<TblRequestRfc> findByStatus(String Status);
 }
