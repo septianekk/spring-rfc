@@ -1,5 +1,7 @@
 package com.spring.api_rfc.spring_rfc.service;
 
+import com.spring.api_rfc.spring_rfc.dto.ValidateDto;
+import com.spring.api_rfc.spring_rfc.util.TransformToDTO;
 import com.spring.api_rfc.spring_rfc.dto.ApprovalDto;
 import com.spring.api_rfc.spring_rfc.model.TblRfcLogs;
 import com.spring.api_rfc.spring_rfc.repo.TblRequestRfcLogRepository;
@@ -10,7 +12,9 @@ import com.spring.api_rfc.spring_rfc.repo.TblRequestRfcRepository;
 import com.spring.api_rfc.spring_rfc.util.GlobalFunction;
 import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,9 +31,13 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
     }
 
     @Autowired
+    private TblRequestRfcLogRepository tblRequestRfcLogRepository;
+
+    @Autowired
     private TblRequestRfcRepository tblRequestRfcRepository;
 
     @Autowired
+    private TransformToDTO transformToDTO;
     private TblRequestRfcLogRepository tblRequestRfcLogRepository;
 
 
@@ -63,9 +71,53 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
 
     @Override
     public ResponseEntity<Object> findAll(Pageable pageable, HttpServletRequest request) {
-        return null;
+        Page<TblRequestRfc> page = null;
+        List<TblRequestRfc> list = null;
+        try {
+            page = tblRequestRfcRepository.findAll(pageable);
+            list =page.getContent();
+            if (list.isEmpty()){
+                return GlobalFunction.dataNotFound(request);
+            }
+        } catch (Exception e) {
+            return GlobalFunction.cantBeProcessed("FE002002031", request);
+        }
+        return transformToDTO.
+                transformObject(new HashMap<>(),
+                        convertToListTblRequestRfcDTO(list), page, null, null, null, request);
+
+
     }
 
+    public List<TblRequestRfc> getValidates(String status) {
+        return tblRequestRfcRepository.findByStatus(status);
+    }
+
+    public ResponseEntity<Object> updateStatusValidate(Long id, ValidateDto validateDto, HttpServletRequest request) throws Exception {
+        Optional<TblRequestRfc> optionalRequest = tblRequestRfcRepository.findById(id);
+        if (!optionalRequest.isPresent()) {
+            return GlobalFunction.dataNotFound(request);
+        }
+        try {
+            TblRequestRfc requestRfc = optionalRequest.get();
+
+            requestRfc.setStatus(validateDto.getStatus());
+            requestRfc.setValidateNote(validateDto.getValidateNote());
+            requestRfc.setCreatedBy(validateDto.getCreatedBy());
+            requestRfc.setModifiedDate(new Date());
+            TblRequestRfc updatedRequest = tblRequestRfcRepository.save(requestRfc);
+
+            TblRfcLogs log = new TblRfcLogs();
+            log.setRequestId(id);
+            log.setStatus(validateDto.getStatus());
+            log.setCreatedBy(validateDto.getModifiedBy());
+            tblRequestRfcLogRepository.save(log);
+        } catch (Exception e) {
+            return GlobalFunction.failedToChange("FE001001011", request);
+        }
+        return GlobalFunction.dataSuccesRejected(request);
+    }
+    
     public ResponseEntity<?> listAll(HttpServletRequest request) {
         List<TblRequestRfc> tblRequestRfcs = tblRequestRfcRepository.findAll();
         if (tblRequestRfcs.isEmpty()) {
@@ -81,7 +133,7 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
         if (!tblRequestRfc.isPresent()){
             return GlobalFunction.dataNotFound(request);
         }
-        return GlobalFunction.dataByIdAlreadyFound(convertToDTO(tblRequestRfc.get()), request);
+        return GlobalFunction.dataByIdAlreadyFound(convertToReqDTO(tblRequestRfc.get()), request);
     }
 
     @Override
@@ -132,8 +184,15 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
         return modelMapper.map(tblRequestRfcValidasi, TblRequestRfc.class);
     }
 
-    public com.spring.api_rfc.spring_rfc.dto.TblRequestRfcDTO convertToDTO(TblRequestRfc tblRequestRfc){
+    public com.spring.api_rfc.spring_rfc.dto.TblRequestRfcDTO convertToReqDTO(TblRequestRfc tblRequestRfc){
         return modelMapper.map(tblRequestRfc, com.spring.api_rfc.spring_rfc.dto.TblRequestRfcDTO.class);
     }
 
+    public com.spring.api_rfc.spring_rfc.dto.ValidateDto convertToValidateDto(TblRequestRfc tblRequestRfc){
+        return modelMapper.map(tblRequestRfc, com.spring.api_rfc.spring_rfc.dto.ValidateDto.class);
+    }
+
+    public List<TblRequestRfcDTO> convertToListTblRequestRfcDTO(List<TblRequestRfc> groupUserList){
+        return modelMapper.map(groupUserList,new TypeToken<List<TblRequestRfcDTO>>(){}.getType());
+    }
 }
