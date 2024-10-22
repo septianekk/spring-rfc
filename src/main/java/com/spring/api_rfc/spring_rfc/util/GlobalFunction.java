@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public class GlobalFunction {
 
     public static ResponseEntity<Object> dataHasSaved(HttpServletRequest request){
@@ -45,6 +47,13 @@ public class GlobalFunction {
                 "Data Berhasil di Reject",
                 HttpStatus.OK,
                 null,
+        );
+    }
+    public static ResponseEntity<Object> dataListFound(List<?> dataList, HttpServletRequest request) {
+        return new ResponseHandler().generateResponse(
+                "Data berhasil ditemukan",
+                HttpStatus.OK,
+                dataList,
                 null,
                 request
         );
@@ -106,6 +115,26 @@ public class GlobalFunction {
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 null,
                 errorCode,
+                request
+        );
+    }
+
+    public static ResponseEntity<Object> invalidCredential(HttpServletRequest request) {
+        return new ResponseHandler().generateResponse(
+              "Password Salah",
+                HttpStatus.UNAUTHORIZED,
+                null,
+                "401",
+                request
+        );
+    }
+
+    public static ResponseEntity<Object> successWithToken(Object object, HttpServletRequest request) {
+        return new ResponseHandler().generateResponse(
+                "Berhasil Login",
+                HttpStatus.OK,
+                object,
+                "200",
                 request
         );
     }

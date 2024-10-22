@@ -64,7 +64,7 @@ public class TblRequestRfc {
     private String evaluasiResiko;
     @Column(name = "Estimasi_Durasi_Pengerjaan", length = 50)
     private String estimasiDurasiPengerjaan;
-    @Column(name = "Rekomendasi_Alternatif", length = 20)
+    @Column(name = "Rekomendasi_Alternatif", length = 100)
     private String rekomendasiAlternatif;
     @Lob
     @Column(name = "Keterangan_Tambahan2")
@@ -85,6 +85,29 @@ public class TblRequestRfc {
     @Lob
     @Column(name = "Validate_Note")
     private String validateNote;
+
+    @Column(name = "Validate_Code")
+    private String validateCode;
+
+    @Column(name = "Validate_Name")
+    private String validateName;
+
+    public String getValidateCode() {
+        return validateCode;
+    }
+
+    public void setValidateCode(String validateCode) {
+        this.validateCode = validateCode;
+    }
+
+    public String getValidateName() {
+        return validateName;
+    }
+
+    public void setValidateName(String validateName) {
+        this.validateName = validateName;
+    }
+
     @CreationTimestamp
     @Column(name = "Modified_Date")
     private Date modifiedDate;

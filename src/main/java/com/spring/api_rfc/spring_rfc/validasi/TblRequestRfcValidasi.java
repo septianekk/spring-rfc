@@ -49,6 +49,16 @@ public class TblRequestRfcValidasi {
     private String dampak;
     @CreatedDate
     private Date tglRequest;
+
+    private String createdBy;
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
     private String status;
     private String createdBy;
     @CreationTimestamp
@@ -69,6 +79,7 @@ public class TblRequestRfcValidasi {
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
+
 
     public Long getRequestId() {
         return requestId;

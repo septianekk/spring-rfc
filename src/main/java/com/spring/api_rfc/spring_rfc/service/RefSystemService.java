@@ -16,7 +16,7 @@ public class RefSystemService {
     private RefSystemRepository refSystemRepository;
 
     public List<RefSystem> findAll() {
-        List<RefSystem> refSystems = refSystemRepository.findAll();
+            List<RefSystem> refSystems = refSystemRepository.findAll();
         return refSystems;
     }
 

@@ -23,9 +23,9 @@ public class User implements UserDetails{
     private String referal_code;
     private String name;
     private String date_of_birth;
-    private String Image_Photo;
-    private String Email;
-    private String Email_Dika;
+    private String image_photo;
+    private String email;
+    private String email_dika;
     private String employee_type;
     private String employee_type_group;
     private String branch;
@@ -48,8 +48,25 @@ public class User implements UserDetails{
     private String password_pemol;
     private String password_change;
     private String password_reset;
-    private String token;
 
+    public String getImage_photo() {
+        return image_photo;
+    }
+
+    public void setImage_photo(String image_photo) {
+        this.image_photo = image_photo;
+    }
+
+    public String getPrivilege() {
+        return privilege;
+    }
+
+    public void setPrivilege(String privilege) {
+        this.privilege = privilege;
+    }
+
+    private String token;
+    private String privilege;
     public Long getEmployee_ID() {
         return Employee_ID;
     }
@@ -99,27 +116,27 @@ public class User implements UserDetails{
     }
 
     public String getImage_Photo() {
-        return Image_Photo;
+        return image_photo;
     }
 
     public void setImage_Photo(String image_Photo) {
-        Image_Photo = image_Photo;
+        image_photo = image_Photo;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        this.Email = email;
+        this.email = email;
     }
 
-    public String getEmail_Dika() {
-        return Email_Dika;
+    public String getEmail_dika() {
+        return email_dika;
     }
 
-    public void setEmail_Dika(String email_Dika) {
-        Email_Dika = email_Dika;
+    public void setEmail_dika(String email_dika) {
+        this.email_dika = email_dika;
     }
 
     public String getEmployee_type() {
