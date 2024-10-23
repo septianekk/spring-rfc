@@ -97,10 +97,10 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
         return null;
     }
 
-    @Override
-    public ResponseEntity<Object> findById(Long id, HttpServletRequest request) {
-        return null;
-    }
+//    @Override
+//    public ResponseEntity<Object> findById(Long id, HttpServletRequest request) {
+//        return null;
+//    }
 
     public ResponseEntity<?> listAll(HttpServletRequest request) {
         List<TblRequestRfc> tblRequestRfcs = tblRequestRfcRepository.findAll();
@@ -113,14 +113,14 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
 
 
 
-//    @Override
-//    public ResponseEntity<Object> findById(Long id, HttpServletRequest request) {
-//        Optional<TblRequestRfc> tblRequestRfc =tblRequestRfcRepository.findById(id);
-//        if (!tblRequestRfc.isPresent()){
-//            return GlobalFunction.dataNotFound(request);
-//        }
-//        return GlobalFunction.dataByIdAlreadyFound(convertToDTO(tblRequestRfc.get()), request);
-//    }
+    @Override
+    public ResponseEntity<Object> findById(Long id, HttpServletRequest request) {
+        Optional<TblRequestRfc> tblRequestRfc =tblRequestRfcRepository.findById(id);
+        if (!tblRequestRfc.isPresent()){
+            return GlobalFunction.dataNotFound(request);
+        }
+        return GlobalFunction.dataByIdAlreadyFound(convertToDTO(tblRequestRfc.get()), request);
+    }
 
     @Override
     public ResponseEntity<Object> findByParam(Pageable pageable, String columnName, String value, HttpServletRequest request) {

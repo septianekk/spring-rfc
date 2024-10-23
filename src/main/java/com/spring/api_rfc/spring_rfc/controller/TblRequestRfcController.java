@@ -41,8 +41,8 @@ public class TblRequestRfcController {
 //    }
 
 
-    @GetMapping("/req/{request_id}")
-    public ResponseEntity<Object> findById(@PathVariable(value = "request_id") Long requestId, HttpServletRequest request) {
+    @GetMapping("/req/{requestId}")
+    public ResponseEntity<Object> findById(@PathVariable(value = "requestId") Long requestId, HttpServletRequest request) {
         return ResponseEntity.ok(tblRequestRfcService.findById(requestId, request));
     }
 

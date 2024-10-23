@@ -41,8 +41,4 @@ public class ValidateController {
         }
     }
 
-    @GetMapping("/req/{id}")
-    public ResponseEntity<Object> findId(@PathVariable(value = "id") Long requestId, HttpServletRequest request) {
-        return ResponseEntity.ok(tblRequestRfcService.findById(requestId, request));
-    }
 }
