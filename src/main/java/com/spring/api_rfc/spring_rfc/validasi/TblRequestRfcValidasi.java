@@ -60,17 +60,9 @@ public class TblRequestRfcValidasi {
     }
 
     private String status;
-    private String createdBy;
     @CreationTimestamp
     private String createDate;
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
 
     public String getCreateDate() {
         return createDate;

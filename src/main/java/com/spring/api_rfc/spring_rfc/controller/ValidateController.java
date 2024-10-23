@@ -27,7 +27,7 @@ public class ValidateController {
         return ResponseEntity.ok(requestRfcs);
     }
 
-    @PutMapping("/validate/updt/{id}")
+    @PutMapping("/validate/update/{id}")
     public ResponseEntity<?> updateStatusValidate(
             @PathVariable("id") Long id, @Valid @RequestBody ValidateDto validateRfcDTO, HttpServletRequest request
     ) {
@@ -41,8 +41,8 @@ public class ValidateController {
         }
     }
 
-    @GetMapping("/req/{request_id}")
-    public ResponseEntity<Object> findById(@PathVariable(value = "request_id") Long requestId, HttpServletRequest request) {
+    @GetMapping("/req/{id}")
+    public ResponseEntity<Object> findId(@PathVariable(value = "id") Long requestId, HttpServletRequest request) {
         return ResponseEntity.ok(tblRequestRfcService.findById(requestId, request));
     }
 }

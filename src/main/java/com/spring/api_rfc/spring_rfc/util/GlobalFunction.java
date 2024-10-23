@@ -47,6 +47,8 @@ public class GlobalFunction {
                 "Data Berhasil di Reject",
                 HttpStatus.OK,
                 null,
+                null,
+                request
         );
     }
     public static ResponseEntity<Object> dataListFound(List<?> dataList, HttpServletRequest request) {
