@@ -101,6 +101,7 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
 //    public ResponseEntity<Object> findById(Long id, HttpServletRequest request) {
 //        return null;
 //    }
+//    nyoba aja
 
     public ResponseEntity<?> listAll(HttpServletRequest request) {
         List<TblRequestRfc> tblRequestRfcs = tblRequestRfcRepository.findAll();
