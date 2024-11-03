@@ -51,6 +51,17 @@ public class GlobalFunction {
                 request
         );
     }
+
+    public static ResponseEntity<Object> dataSuccesSubmitted(HttpServletRequest request){
+        return new ResponseHandler().generateResponse(
+                "Data Berhasil di Submit",
+                HttpStatus.OK,
+                null,
+                null,
+                request
+        );
+    }
+
     public static ResponseEntity<Object> dataListFound(List<?> dataList, HttpServletRequest request) {
         return new ResponseHandler().generateResponse(
                 "Data berhasil ditemukan",

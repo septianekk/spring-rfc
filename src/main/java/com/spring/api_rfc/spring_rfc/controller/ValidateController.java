@@ -1,6 +1,7 @@
 package com.spring.api_rfc.spring_rfc.controller;
 
 
+import com.spring.api_rfc.spring_rfc.dto.SubmitValidateDto;
 import com.spring.api_rfc.spring_rfc.dto.ValidateDto;
 import com.spring.api_rfc.spring_rfc.model.TblRequestRfc;
 import com.spring.api_rfc.spring_rfc.service.TblRequestRfcService;
@@ -35,6 +36,20 @@ public class ValidateController {
             tblRequestRfcService.updateStatusValidate(id, validateRfcDTO, request);
 
             return GlobalFunction.dataSuccesRejected(request);
+        } catch (Exception e) {
+
+            return GlobalFunction.dataFailedToSave(e.getMessage(), request);
+        }
+    }
+
+    @PutMapping("/validate/submit/{id}")
+    public ResponseEntity<?> submitValidate(
+            @PathVariable("id") Long id, @Valid @RequestBody SubmitValidateDto submitValidateDto, HttpServletRequest request
+    ) {
+        try {
+            tblRequestRfcService.submitValidate(id, submitValidateDto, request);
+
+            return GlobalFunction.dataSuccesSubmitted(request);
         } catch (Exception e) {
 
             return GlobalFunction.dataFailedToSave(e.getMessage(), request);
