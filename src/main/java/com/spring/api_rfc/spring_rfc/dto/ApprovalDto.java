@@ -1,18 +1,29 @@
 package com.spring.api_rfc.spring_rfc.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class ApprovalDto {
 
     private Long requestId;
     private String status;
-    private Date modifiedDate;
 
-    public Date getModifiedDate() {
+    public String getRejectNote() {
+        return rejectNote;
+    }
+
+    public void setRejectNote(String rejectNote) {
+        this.rejectNote = rejectNote;
+    }
+
+    private String rejectNote;
+    private LocalDateTime modifiedDate;
+
+    public LocalDateTime getModifiedDate() {
         return modifiedDate;
     }
 
-    public void setModifiedDate(Date modifiedDate) {
+    public void setModifiedDate(LocalDateTime modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 
