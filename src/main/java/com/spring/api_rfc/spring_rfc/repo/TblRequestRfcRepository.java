@@ -13,4 +13,5 @@ import java.util.Optional;
 public interface TblRequestRfcRepository extends JpaRepository<TblRequestRfc, Long> {
     List<TblRequestRfc> findByStatus(String Status);
     List<TblRequestRfc> findByApprovalCodeAndStatus(String approvalCode, String status);
+    List<TblRequestRfc> findByAssignCodeAndStatus(String assignCode, String status);
 }

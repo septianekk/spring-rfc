@@ -1,6 +1,8 @@
 package com.spring.api_rfc.spring_rfc.service;
 
 import com.spring.api_rfc.spring_rfc.dto.ApprovalDto;
+import com.spring.api_rfc.spring_rfc.dto.SignProgrammer;
+import com.spring.api_rfc.spring_rfc.dto.SubmitValidateDto;
 import com.spring.api_rfc.spring_rfc.dto.ValidateDto;
 import com.spring.api_rfc.spring_rfc.model.TblRfcLogs;
 import com.spring.api_rfc.spring_rfc.repo.TblRequestRfcLogRepository;
@@ -148,6 +150,9 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
                 TblRequestRfc requestRfc = optionalRequest.get();
 
                 requestRfc.setStatus(approvalDto.getStatus());
+                if(approvalDto.getStatus().equals("REJECT APPROVAL")){
+                    requestRfc.setApprovalNote(approvalDto.getRejectNote());
+                }
                 requestRfc.setModifiedDate(new Date());
                 requestRfc.setModifiedBy(approvalDto.getModifiedBy());
                 TblRequestRfc updatedRequest = tblRequestRfcRepository.save(requestRfc);
@@ -165,6 +170,61 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
         } else {
             return GlobalFunction.dataNotFound(request);
         }
+    }
+
+    public ResponseEntity<Object> submitValidate(Long id, SubmitValidateDto submitValidateDto, HttpServletRequest request) throws Exception {
+        Optional<TblRequestRfc> optionalRequest = tblRequestRfcRepository.findById(id);
+        if (!optionalRequest.isPresent()) {
+            return GlobalFunction.dataNotFound(request);
+        }
+        try {
+            TblRequestRfc requestRfc = optionalRequest.get();
+            requestRfc.setAssignCode(submitValidateDto.getAssignCode());
+            requestRfc.setAssignName(submitValidateDto.getAssignName());
+            requestRfc.setLingkupTerdampak(submitValidateDto.getLingkupTerdampak());
+            requestRfc.setPrioritasPengerjaan(submitValidateDto.getPrioritasPengerjaan());
+            requestRfc.setEvaluasiResiko(submitValidateDto.getEvaluasiResiko());
+            requestRfc.setTglExecute(submitValidateDto.getTglExecute());
+            requestRfc.setTglEstimasi(submitValidateDto.getTglEstimasi());
+            requestRfc.setRekomendasiAlternatif(submitValidateDto.getRekomendasiAlternatif());
+            requestRfc.setValidateCode(submitValidateDto.getValidateCode());
+            requestRfc.setValidateName(submitValidateDto.getValidateName());
+            requestRfc.setModifiedBy(submitValidateDto.getModifiedBy());
+            requestRfc.setModifiedDate(new Date());
+            TblRequestRfc updatedRequest = tblRequestRfcRepository.save(requestRfc);
+
+            TblRfcLogs log = new TblRfcLogs();
+            log.setRequestId(id);
+            log.setStatus(submitValidateDto.getStatus());
+            log.setCreatedBy(submitValidateDto.getModifiedBy());
+            tblRequestRfcLogRepository.save(log);
+        } catch (Exception e) {
+            return GlobalFunction.failedToChange("FE001001011", request);
+        }
+        return GlobalFunction.dataSuccesRejected(request);
+    }
+
+    public List<TblRequestRfc> getTikets(String assignCode, String status) {
+
+        return tblRequestRfcRepository.findByAssignCodeAndStatus(assignCode,status);
+    }
+
+    public ResponseEntity<Object> signProgammer(Long id, SignProgrammer signProgrammer, HttpServletRequest request) throws Exception {
+        Optional<TblRequestRfc> optionalRequest = tblRequestRfcRepository.findById(id);
+        if (!optionalRequest.isPresent()) {
+            return GlobalFunction.dataNotFound(request);
+        }
+        try {
+            TblRequestRfc requestRfc = optionalRequest.get();
+            requestRfc.setProgrammerCode(signProgrammer.getProgrammerCode());
+            requestRfc.setProgrammerName(signProgrammer.getProgrammerName());
+            requestRfc.setModifiedBy(signProgrammer.getModifiedBy());
+            requestRfc.setModifiedDate(new Date());
+            tblRequestRfcRepository.save(requestRfc);
+        } catch (Exception e) {
+            return GlobalFunction.failedToChange("FE001001011", request);
+        }
+        return GlobalFunction.dataHasChanged(request);
     }
 
 
