@@ -67,8 +67,8 @@ public class AuthenticationService {
         loginResponse.setDepartement(userNow.getDepartement());
         loginResponse.setUnit(userNow.getUnit());
         loginResponse.setLevel(userNow.getLevel());
-        loginResponse.setSm_code(userNow.getSm_code());
-        loginResponse.setSm_name(userNow.getSm_name());
+        loginResponse.setSm_code(userNow.getSmCode());
+        loginResponse.setSm_name(userNow.getSmName());
         loginResponse.setPrivilege(userNow.getPrivilege());
         return GlobalFunction.successWithToken(loginResponse,request);
     }

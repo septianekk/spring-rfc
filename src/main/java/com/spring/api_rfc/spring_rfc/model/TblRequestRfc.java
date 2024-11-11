@@ -3,6 +3,7 @@ package com.spring.api_rfc.spring_rfc.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -38,7 +39,8 @@ public class TblRequestRfc {
     @Column(name = "Dampak")
     private String dampak;
 
-    @Column(name = "Tgl_Request",insertable = true,updatable = false)
+    @CreatedDate
+    @Column(name = "Tgl_Request",insertable = true)
     private LocalDateTime tglRequest;
     @Column(name = "Tgl_Execute",insertable = false)
     private LocalDateTime tglExecute;

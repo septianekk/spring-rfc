@@ -14,9 +14,19 @@ Version 1.0
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 public class Abc {
 
     public static void main(String[] args) {
+
+            // Mendapatkan LocalDateTime saat ini
+            LocalDateTime currentDateTime = LocalDateTime.now();
+        Date currentDate = new Date();
+
+            System.out.println("Current LocalDateTime: " + currentDateTime);
+        System.out.println("Current Date: " + currentDate);
 
         BCryptPasswordEncoder a = new BCryptPasswordEncoder();
 //        System.out.println(a.matches("D6180209a","0cc175b9c0f1b6a831c399e269772661"));

@@ -29,13 +29,12 @@ public class TblRequestRfcController {
     @Autowired
     private TblRequestRfcService tblRequestRfcService;
 
-
-    @GetMapping("/req/all")
-    public ResponseEntity<Object> findAll() {
-//        return ResponseEntity.ok(tblRequestRfcService.findAll());
-        return null;
+    @GetMapping("/get-all-req")
+    public ResponseEntity<Object> findAll(HttpServletRequest request){
+        return ResponseEntity.ok(tblRequestRfcService.findAll(request));
     }
 
+//    @GetMapping("/req/all")
 //    public ResponseEntity<List<TblRequestRfc>> findAll(HttpServletRequest request) {
 //        return ResponseEntity.ok(tblRequestRfcService.listAll(request));
 //    }

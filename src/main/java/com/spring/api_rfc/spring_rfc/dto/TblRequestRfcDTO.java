@@ -1,6 +1,7 @@
 package com.spring.api_rfc.spring_rfc.dto;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class TblRequestRfcDTO {
@@ -14,7 +15,7 @@ public class TblRequestRfcDTO {
     private String kategoriPerubahan;
     private String alasanPerubahan;
     private String dampak;
-    private Date tglRequest;
+    private LocalDateTime tglRequest;
     private String status;
 
     public Long getRequestId() {
@@ -89,11 +90,11 @@ public class TblRequestRfcDTO {
         this.dampak = dampak;
     }
 
-    public Date getTglRequest() {
+    public LocalDateTime getTglRequest() {
         return tglRequest;
     }
 
-    public void setTglRequest(Date tglRequest) {
+    public void setTglRequest(LocalDateTime tglRequest) {
         this.tglRequest = tglRequest;
     }
 

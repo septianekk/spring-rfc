@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class TblRequestRfcValidasi {
@@ -48,7 +49,15 @@ public class TblRequestRfcValidasi {
     @NotEmpty
     private String dampak;
     @CreatedDate
-    private Date tglRequest;
+    private LocalDateTime tglRequest;
+
+    public LocalDateTime getTglRequest() {
+        return tglRequest;
+    }
+
+    public void setTglRequest(LocalDateTime tglRequest) {
+        this.tglRequest = tglRequest;
+    }
 
     private String createdBy;
     public String getCreatedBy() {
@@ -143,14 +152,6 @@ public class TblRequestRfcValidasi {
 
     public void setDampak(@NotNull @NotBlank @NotEmpty String dampak) {
         this.dampak = dampak;
-    }
-
-    public Date getTglRequest() {
-        return tglRequest;
-    }
-
-    public void setTglRequest(Date tglRequest) {
-        this.tglRequest = tglRequest;
     }
 
     public String getStatus() {

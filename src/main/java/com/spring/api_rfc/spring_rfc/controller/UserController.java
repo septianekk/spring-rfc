@@ -28,7 +28,7 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @GetMapping("/users")
+    @GetMapping("/users/status")
     public ResponseEntity<List<User>> getUserBySmCodeAndStatus(
             @RequestParam String smCode,
             @RequestParam String status

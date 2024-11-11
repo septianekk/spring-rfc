@@ -1,11 +1,9 @@
 package com.spring.api_rfc.spring_rfc.service;
 
-import com.spring.api_rfc.spring_rfc.dto.ApprovalDto;
-import com.spring.api_rfc.spring_rfc.dto.SignProgrammer;
-import com.spring.api_rfc.spring_rfc.dto.SubmitValidateDto;
-import com.spring.api_rfc.spring_rfc.dto.ValidateDto;
+import com.spring.api_rfc.spring_rfc.dto.*;
 import com.spring.api_rfc.spring_rfc.model.TblRfcLogs;
 import com.spring.api_rfc.spring_rfc.repo.TblRequestRfcLogRepository;
+import com.spring.api_rfc.spring_rfc.response.TblRequestRfcResponse;
 import com.spring.api_rfc.spring_rfc.validasi.TblRequestRfcValidasi;
 import com.spring.api_rfc.spring_rfc.core.IService;
 import com.spring.api_rfc.spring_rfc.model.TblRequestRfc;
@@ -15,10 +13,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -35,6 +37,41 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
     @Autowired
     private TblRequestRfcLogRepository tblRequestRfcLogRepository;
 
+    public ResponseEntity<Object> findAll(HttpServletRequest request){
+        Map<String, Object> m = new HashMap<>();
+        try {
+            m.put("data", getRfcDto(tblRequestRfcRepository.findAll()));
+            if (m.isEmpty()){
+                return GlobalFunction.dataNotFound(request);
+            }
+        } catch (Exception e) {
+            return GlobalFunction.cantBeProcessed("FE002002031", request);
+        }
+        return new ResponseEntity<>(m, HttpStatus.OK);
+    }
+
+    public List<TblRequestRfcDTO> getRfcDto(Iterable<TblRequestRfc> tblRequestRfcs){
+        List<TblRequestRfc> target = new ArrayList<>();
+        tblRequestRfcs.forEach(target::add);
+
+        List<TblRequestRfcDTO> dtos = new ArrayList<>();
+        for (TblRequestRfc tblRequestRfc : tblRequestRfcs){
+            TblRequestRfcDTO tblRequestRfcDTO = new TblRequestRfcDTO();
+            tblRequestRfcDTO.setRequestId(tblRequestRfc.getRequestId());
+            tblRequestRfcDTO.setNik(tblRequestRfc.getNik());
+            tblRequestRfcDTO.setNama(tblRequestRfc.getNama());
+            tblRequestRfcDTO.setDivisi(tblRequestRfc.getDivisi());
+            tblRequestRfcDTO.setNamaSistem(tblRequestRfc.getNamaSistem());
+            tblRequestRfcDTO.setKategoriPerubahan(tblRequestRfc.getKategoriPerubahan());
+            tblRequestRfcDTO.setAlasanPerubahan(tblRequestRfc.getAlasanPerubahan());
+            tblRequestRfcDTO.setDampak(tblRequestRfc.getDampak());
+            tblRequestRfcDTO.setDeskripsi(tblRequestRfc.getDeskripsi());
+            tblRequestRfcDTO.setTglRequest(tblRequestRfc.getTglRequest());
+            tblRequestRfcDTO.setStatus(tblRequestRfc.getStatus());
+            dtos.add(tblRequestRfcDTO);
+        }
+        return dtos;
+    }
 
     @Override
     public ResponseEntity<Object> save(TblRequestRfc tblRequestRfc, HttpServletRequest request) {
@@ -43,6 +80,12 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
         }
         try {
             TblRequestRfc savedRequest = tblRequestRfcRepository.save(tblRequestRfc);
+            savedRequest.setTglRequest(LocalDateTime.now());
+            savedRequest.setStatus("NEW");
+            savedRequest.setCreatedBy(savedRequest.getNama());
+            savedRequest.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+            tblRequestRfcRepository.save(savedRequest);
+
             TblRfcLogs log = new TblRfcLogs();
 
             log.setRequestId(savedRequest.getRequestId());
