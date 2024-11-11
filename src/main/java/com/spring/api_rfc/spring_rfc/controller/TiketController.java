@@ -39,15 +39,15 @@ public class TiketController {
         return ResponseEntity.ok(tblRequestRfcService.findById(requestId, request));
     }
 
-    @GetMapping("/tiket/user")
-    public ResponseEntity<List<User>> getUserBySmCodeAndStatus(
-            @RequestParam String smCode,
-            @RequestParam String status
-    ) {
-        List<User> users = userService.getUserBySmCodeAndStatus(smCode,status);
-        return ResponseEntity.ok(users);
-
-    }
+//    @GetMapping("/tiket/user")
+//    public ResponseEntity<List<User>> getUserBySmCodeAndStatus(
+//            @RequestParam String smCode,
+//            @RequestParam String status
+//    ) {
+//        List<User> users = userService.getUserBySmCodeAndStatus(smCode,status);
+//        return ResponseEntity.ok(users);
+//
+//    }
 
     @PutMapping("/tiket/signtoprog/{id}")
     public ResponseEntity<?> updateSignToProg(

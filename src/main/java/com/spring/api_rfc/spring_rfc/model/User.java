@@ -19,6 +19,22 @@ public class User implements UserDetails{
     @Column(name = "nik", unique = true)
     private String nik;
 
+    public String getSmCode() {
+        return smCode;
+    }
+
+    public void setSmCode(String smCode) {
+        this.smCode = smCode;
+    }
+
+    public String getSmName() {
+        return smName;
+    }
+
+    public void setSmName(String smName) {
+        this.smName = smName;
+    }
+
     private String dsr_code;
     private String referal_code;
     private String name;
@@ -38,8 +54,12 @@ public class User implements UserDetails{
     private String level;
     private String product;
     private String status;
-    private String sm_code;
-    private String sm_name;
+
+    @Column(name = "sm_code")
+    private String smCode;
+
+    @Column(name = "sm_name")
+    private String smName;
 //    @Column(name = "sm_name")
 //    private String smName;
 
@@ -233,22 +253,6 @@ public class User implements UserDetails{
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getSm_code() {
-        return sm_code;
-    }
-
-    public void setSm_code(String sm_code) {
-        this.sm_code = sm_code;
-    }
-
-    public String getSm_name() {
-        return sm_name;
-    }
-
-    public void setSm_name(String sm_name) {
-        this.sm_name = sm_name;
     }
 
     @Override
