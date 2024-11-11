@@ -28,14 +28,13 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @GetMapping("/users")
+    @GetMapping("/user/smcode_status")
     public ResponseEntity<List<User>> getUserBySmCodeAndStatus(
             @RequestParam String smCode,
             @RequestParam String status
     ) {
         List<User> users = userService.getUserBySmCodeAndStatus(smCode,status);
         return ResponseEntity.ok(users);
-
     }
 
     @GetMapping("/users/sqa")
