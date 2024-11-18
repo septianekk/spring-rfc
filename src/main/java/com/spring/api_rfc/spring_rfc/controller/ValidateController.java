@@ -42,7 +42,7 @@ public class ValidateController {
         }
     }
 
-    @PutMapping("/validate/submit/{id}")
+        @PutMapping("/validate/submit/{id}")
     public ResponseEntity<?> submitValidate(
             @PathVariable("id") Long id, @Valid @RequestBody SubmitValidateDto submitValidateDto, HttpServletRequest request
     ) {

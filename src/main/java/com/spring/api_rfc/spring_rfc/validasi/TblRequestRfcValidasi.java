@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class TblRequestRfcValidasi {
@@ -43,12 +44,67 @@ public class TblRequestRfcValidasi {
     @NotBlank
     @NotEmpty
     private String alasanPerubahan;
+
+    public String getRuangLingkup() {
+        return ruangLingkup;
+    }
+
+    public void setRuangLingkup(String ruangLingkup) {
+        this.ruangLingkup = ruangLingkup;
+    }
+
     @NotNull
     @NotBlank
     @NotEmpty
     private String dampak;
-    @CreatedDate
+
+    private String ruangLingkup;
+
+    public String getKeteranganTambahan2() {
+        return keteranganTambahan2;
+    }
+
+    public void setKeteranganTambahan2(String keteranganTambahan2) {
+        this.keteranganTambahan2 = keteranganTambahan2;
+    }
+
+    @NotNull
+    @NotBlank
+    @NotEmpty
+    private String approvalCode;
+    private String keteranganTambahan2;
+
+
+    public @NotNull @NotBlank @NotEmpty String getApprovalName() {
+        return approvalName;
+    }
+
+    public void setApprovalName(@NotNull @NotBlank @NotEmpty String approvalName) {
+        this.approvalName = approvalName;
+    }
+
+    public @NotNull @NotBlank @NotEmpty String getApprovalCode() {
+        return approvalCode;
+    }
+
+    public void setApprovalCode(@NotNull @NotBlank @NotEmpty String approvalCode) {
+        this.approvalCode = approvalCode;
+    }
+
+    @NotNull
+    @NotBlank
+    @NotEmpty
+    private String approvalName;
+
+    public Date getTglRequest() {
+        return tglRequest;
+    }
+
     private Date tglRequest;
+
+    public void setTglRequest(Date tglRequest) {
+        this.tglRequest = tglRequest;
+    }
 
     private String createdBy;
     public String getCreatedBy() {
@@ -143,14 +199,6 @@ public class TblRequestRfcValidasi {
 
     public void setDampak(@NotNull @NotBlank @NotEmpty String dampak) {
         this.dampak = dampak;
-    }
-
-    public Date getTglRequest() {
-        return tglRequest;
-    }
-
-    public void setTglRequest(Date tglRequest) {
-        this.tglRequest = tglRequest;
     }
 
     public String getStatus() {

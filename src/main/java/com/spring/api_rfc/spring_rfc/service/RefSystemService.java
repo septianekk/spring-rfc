@@ -2,12 +2,18 @@ package com.spring.api_rfc.spring_rfc.service;
 
 import com.spring.api_rfc.spring_rfc.dto.RefSystemDto;
 import com.spring.api_rfc.spring_rfc.model.RefSystem;
+import com.spring.api_rfc.spring_rfc.model.TblRequestRfc;
 import com.spring.api_rfc.spring_rfc.repo.RefSystemRepository;
+import com.spring.api_rfc.spring_rfc.util.GlobalFunction;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RefSystemService {
@@ -15,9 +21,22 @@ public class RefSystemService {
     @Autowired
     private RefSystemRepository refSystemRepository;
 
+    private ModelMapper modelMapper;
+    public RefSystemService() {
+        modelMapper = new ModelMapper();
+    }
+
     public List<RefSystem> findAll() {
             List<RefSystem> refSystems = refSystemRepository.findAll();
         return refSystems;
+    }
+
+    public ResponseEntity<Object> findById(Long id, HttpServletRequest request) {
+        Optional<RefSystem> tblRefSystem = refSystemRepository.findById(id);
+        if (!tblRefSystem.isPresent()){
+            return GlobalFunction.dataNotFound(request);
+        }
+        return GlobalFunction.dataByIdAlreadyFound(convertToDTO(tblRefSystem.get()), request);
     }
 
 
@@ -43,5 +62,9 @@ public class RefSystemService {
 
     public void deleteSystem(Long id) {
         refSystemRepository.deleteById(id);
+    }
+
+    public com.spring.api_rfc.spring_rfc.dto.RefSystemDto convertToDTO(RefSystem tblRefSystem) {
+        return modelMapper.map(tblRefSystem, com.spring.api_rfc.spring_rfc.dto.RefSystemDto.class);
     }
 }

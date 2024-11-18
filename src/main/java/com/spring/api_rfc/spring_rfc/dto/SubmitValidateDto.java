@@ -12,8 +12,8 @@ public class SubmitValidateDto {
     private String prioritasPengerjaan;
     private String evaluasiResiko;
 
-    private LocalDateTime tglExecute;
-    private LocalDateTime tglEstimasi;
+    private Date tglExecute;
+    private Date tglEstimasi;
     private String rekomendasiAlternatif;
     private String validateCode;
     private String validateName;
@@ -79,19 +79,19 @@ public class SubmitValidateDto {
         this.evaluasiResiko = evaluasiResiko;
     }
 
-    public LocalDateTime getTglExecute() {
+    public Date getTglExecute() {
         return tglExecute;
     }
 
-    public void setTglExecute(LocalDateTime tglExecute) {
+    public void setTglExecute(Date tglExecute) {
         this.tglExecute = tglExecute;
     }
 
-    public LocalDateTime getTglEstimasi() {
+    public Date getTglEstimasi() {
         return tglEstimasi;
     }
 
-    public void setTglEstimasi(LocalDateTime tglEstimasi) {
+    public void setTglEstimasi(Date tglEstimasi) {
         this.tglEstimasi = tglEstimasi;
     }
 

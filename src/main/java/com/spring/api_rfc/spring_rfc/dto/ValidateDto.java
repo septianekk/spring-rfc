@@ -1,6 +1,7 @@
 package com.spring.api_rfc.spring_rfc.dto;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class ValidateDto {
@@ -11,7 +12,36 @@ public class ValidateDto {
     private String validateNote;
     private String createdBy;
     private String modifiedBy;
+
+    public LocalDateTime getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(LocalDateTime modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
     private String createdDate;
+    private LocalDateTime modifiedDate;
+
+    public String getValidateCode() {
+        return validateCode;
+    }
+
+    public void setValidateCode(String validateCode) {
+        this.validateCode = validateCode;
+    }
+
+    public String getValidateName() {
+        return validateName;
+    }
+
+    public void setValidateName(String validateName) {
+        this.validateName = validateName;
+    }
+
+    private String validateCode;
+    private String validateName;
 
     public Long getRequestId() {
         return requestId;
