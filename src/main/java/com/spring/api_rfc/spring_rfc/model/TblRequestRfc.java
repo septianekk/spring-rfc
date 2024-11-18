@@ -39,13 +39,13 @@ public class TblRequestRfc {
     private String dampak;
 
     @Column(name = "Tgl_Request",insertable = true,updatable = false)
-    private LocalDateTime tglRequest;
+    private Date tglRequest;
     @Column(name = "Tgl_Execute",insertable = false)
-    private LocalDateTime tglExecute;
+    private Date tglExecute;
 
 
     @Column(name = "Tgl_Estimasi", insertable = false)
-    private LocalDateTime tglEstimasi;
+    private Date tglEstimasi;
     @Column(name = "Assign_Code", length = 8)
     private String assignCode;
     @Column(name = "Assign_Name", length = 50)
@@ -112,7 +112,7 @@ public class TblRequestRfc {
     }
 
     @CreationTimestamp
-    @Column(name = "Modified_Date")
+    @Column(name = "Modified_Date",insertable = false,updatable = true)
     private Date modifiedDate;
     @Column(name = "ModifiedBy", length = 50)
     private String modifiedBy;
@@ -201,27 +201,27 @@ public class TblRequestRfc {
         this.dampak = dampak;
     }
 
-    public LocalDateTime getTglRequest() {
+    public Date getTglRequest() {
         return tglRequest;
     }
 
-    public void setTglRequest(LocalDateTime tglRequest) {
+    public void setTglRequest(Date tglRequest) {
         this.tglRequest = tglRequest;
     }
 
-    public LocalDateTime getTglExecute() {
+    public Date getTglExecute() {
         return tglExecute;
     }
 
-    public void setTglExecute(LocalDateTime tglExecute) {
+    public void setTglExecute(Date tglExecute) {
         this.tglExecute = tglExecute;
     }
 
-    public LocalDateTime getTglEstimasi() {
+    public Date getTglEstimasi() {
         return tglEstimasi;
     }
 
-    public void setTglEstimasi(LocalDateTime tglEstimasi) {
+    public void setTglEstimasi(Date tglEstimasi) {
         this.tglEstimasi = tglEstimasi;
     }
 

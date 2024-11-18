@@ -6,6 +6,7 @@ import com.spring.api_rfc.spring_rfc.model.RefSystem;
 import com.spring.api_rfc.spring_rfc.repo.RefSystemRepository;
 import com.spring.api_rfc.spring_rfc.response.ApiResponse;
 import com.spring.api_rfc.spring_rfc.service.RefSystemService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,11 @@ public class RefSystemController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("systems/{id}")
+    public ResponseEntity<Object> findById(@PathVariable(value = "id") Long requestId, HttpServletRequest request) {
+        return ResponseEntity.ok(refSystemService.findById(requestId, request));
     }
 
     @PutMapping("systems/update/{id}")
