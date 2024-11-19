@@ -55,8 +55,6 @@ public class RefSystemService {
     public RefSystem updateSystem(RefSystemDto refSystem){
         RefSystem existingSystem = refSystemRepository.findById(refSystem.getSystemId()).orElseThrow(() -> new RuntimeException("System not found"));
         existingSystem.setSystemName(refSystem.getSystemName());
-        existingSystem.setStatus(refSystem.getStatus());
-        existingSystem.setCreated_by(refSystem.getCreated_by());
         return refSystemRepository.save(existingSystem);
     }
 

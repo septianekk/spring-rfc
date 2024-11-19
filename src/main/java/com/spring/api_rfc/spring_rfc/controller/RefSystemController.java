@@ -44,14 +44,14 @@ public class RefSystemController {
 
     @Transactional
     @PostMapping("systems")
-    public ResponseEntity<RefSystem> create(@RequestBody RefSystemDto refSystem) {
+    public ResponseEntity<String> create(@RequestBody RefSystemDto refSystem) {
         try {
-            RefSystem _refsystem = refSystemService
-                    .insertSystem(refSystem);
-            return new ResponseEntity<>(_refsystem, HttpStatus.CREATED);
+            refSystemService.insertSystem(refSystem);
+            return new ResponseEntity<>("System registered successfully!", HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+//        return refSystemService.insertSystem(refSystem,status);
     }
 
     @GetMapping("systems/{id}")
@@ -60,10 +60,16 @@ public class RefSystemController {
     }
 
     @PutMapping("systems/update/{id}")
-    public ResponseEntity<RefSystem> update(@PathVariable Long id, @Valid @RequestBody RefSystemDto refSystem) {
-        refSystem.setSystemId(id);
-        RefSystem updateSystem = refSystemService.updateSystem(refSystem);
-        return new ResponseEntity<>(updateSystem, HttpStatus.OK);
+    public ResponseEntity<String> update(@PathVariable Long id, @Valid @RequestBody RefSystemDto refSystem) {
+
+        try {
+//            refSystemService.insertSystem(refSystem);
+            refSystem.setSystemId(id);
+            refSystemService.updateSystem(refSystem);
+            return new ResponseEntity<>("System updated successfully!", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("systems/delete/{id}")
