@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -52,7 +53,23 @@ public class TblRequestRfcController {
         return tblRequestRfcService.save(tblRequestRfcService.convertToEntity(tblRequestRfcValidasi), request);
     }
 
+    @GetMapping("/req")
+    public ResponseEntity<List<TblRequestRfc>> getCreatedBy(
+            @RequestParam String createdBy
+    ) {
+        List<TblRequestRfc> requestRfcs = tblRequestRfcService.getListRequestByCreatedBy(createdBy);
+        return ResponseEntity.ok(requestRfcs);
+    }
 
+    @GetMapping("/summary")
+    public ResponseEntity<?> getRfcSummary(@RequestParam("assignCode") String assignCode) {
+        Map<String, Object> result = tblRequestRfcService.getRfcSummary(assignCode);
+        return ResponseEntity.ok(Map.of(
+                "status", 200,
+                "message", "Summary fetched successfully",
+                "data", result
+        ));
+    }
 
 
 }
