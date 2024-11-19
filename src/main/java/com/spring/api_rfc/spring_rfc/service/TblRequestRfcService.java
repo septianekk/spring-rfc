@@ -208,6 +208,11 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
         return tblRequestRfcRepository.findByAssignCodeAndStatus(assignCode,status);
     }
 
+    public List<TblRequestRfc> getListRequestByCreatedBy(String createdBy) {
+
+        return tblRequestRfcRepository.findByCreatedBy(createdBy);
+    }
+
     public ResponseEntity<Object> signProgammer(Long id, SignProgrammer signProgrammer, HttpServletRequest request) throws Exception {
         Optional<TblRequestRfc> optionalRequest = tblRequestRfcRepository.findById(id);
         if (!optionalRequest.isPresent()) {
@@ -224,6 +229,10 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
             return GlobalFunction.failedToChange("FE001001011", request);
         }
         return GlobalFunction.dataHasChanged(request);
+    }
+
+    public Map<String, Object> getRfcSummary(String assignCode) {
+        return tblRequestRfcRepository.getRfcSummary(assignCode);
     }
 
 
