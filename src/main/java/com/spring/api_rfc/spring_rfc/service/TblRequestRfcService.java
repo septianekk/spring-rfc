@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -69,8 +70,8 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
 
             requestRfc.setStatus(validateDto.getStatus());
             requestRfc.setValidateNote(validateDto.getValidateNote());
-            requestRfc.setCreatedBy(validateDto.getCreatedBy());
-            requestRfc.setModifiedDate(new Date());
+            requestRfc.setModifiedBy(validateDto.getModifiedBy());
+            requestRfc.setModifiedDate(LocalDate.now());
             TblRequestRfc updatedRequest = tblRequestRfcRepository.save(requestRfc);
 
             TblRfcLogs log = new TblRfcLogs();
@@ -135,9 +136,14 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
     }
 
 
-    public List<TblRequestRfc> getApprovals(String approvalCode, String status) {
+    public List<TblRequestRfc> getApprovals(String approvalCode) {
 
-        return tblRequestRfcRepository.findByApprovalCodeAndStatus(approvalCode,status);
+        return tblRequestRfcRepository.findByApprovalCode(approvalCode);
+    }
+
+    public List<TblRequestRfc> getApprovalStatusApproved(String approvalCode) {
+
+        return tblRequestRfcRepository.findByApprovalCodeAndStatusApproved(approvalCode);
     }
 
     public ResponseEntity<Object> updateStatusRfc(Long id, ApprovalDto approvalDto, HttpServletRequest request) throws Exception {
@@ -152,7 +158,7 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
                 if(approvalDto.getStatus().equals("REJECT APPROVAL")){
                     requestRfc.setApprovalNote(approvalDto.getRejectNote());
                 }
-                requestRfc.setModifiedDate(new Date());
+                requestRfc.setModifiedDate(LocalDate.now());
                 requestRfc.setModifiedBy(approvalDto.getModifiedBy());
                 TblRequestRfc updatedRequest = tblRequestRfcRepository.save(requestRfc);
 
@@ -188,8 +194,9 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
             requestRfc.setRekomendasiAlternatif(submitValidateDto.getRekomendasiAlternatif());
             requestRfc.setValidateCode(submitValidateDto.getValidateCode());
             requestRfc.setValidateName(submitValidateDto.getValidateName());
+            requestRfc.setStatus(submitValidateDto.getStatus());
             requestRfc.setModifiedBy(submitValidateDto.getModifiedBy());
-            requestRfc.setModifiedDate(new Date());
+            requestRfc.setModifiedDate(LocalDate.now());
             tblRequestRfcRepository.save(requestRfc);
 
             TblRfcLogs log = new TblRfcLogs();
@@ -203,14 +210,19 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
         return GlobalFunction.dataSuccesRejected(request);
     }
 
-    public List<TblRequestRfc> getTikets(String assignCode, String status) {
-
-        return tblRequestRfcRepository.findByAssignCodeAndStatus(assignCode,status);
+    public List<TblRequestRfc> getTikets(String assignCode) {
+        return tblRequestRfcRepository.findByAssignCode(assignCode);
+//        return tblRequestRfcRepository.findByAssignCodeAndStatus(assignCode,status);
     }
 
     public List<TblRequestRfc> getListRequestByCreatedBy(String createdBy) {
 
         return tblRequestRfcRepository.findByCreatedBy(createdBy);
+    }
+
+    public List<TblRequestRfc> getListRequestByAssignCode(String assignCode) {
+
+        return tblRequestRfcRepository.findByAssignCode(assignCode);
     }
 
     public ResponseEntity<Object> signProgammer(Long id, SignProgrammer signProgrammer, HttpServletRequest request) throws Exception {
@@ -223,7 +235,7 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
             requestRfc.setProgrammerCode(signProgrammer.getProgrammerCode());
             requestRfc.setProgrammerName(signProgrammer.getProgrammerName());
             requestRfc.setModifiedBy(signProgrammer.getModifiedBy());
-            requestRfc.setModifiedDate(new Date());
+            requestRfc.setModifiedDate(LocalDate.now());
             tblRequestRfcRepository.save(requestRfc);
         } catch (Exception e) {
             return GlobalFunction.failedToChange("FE001001011", request);

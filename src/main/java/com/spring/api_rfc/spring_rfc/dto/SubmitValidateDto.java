@@ -1,5 +1,6 @@
 package com.spring.api_rfc.spring_rfc.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -27,7 +28,7 @@ public class SubmitValidateDto {
     }
 
     private String modifiedBy;
-    private LocalDateTime modifiedDate;
+    private LocalDate modifiedDate;
 
     private String status;
 
@@ -127,11 +128,11 @@ public class SubmitValidateDto {
         this.modifiedBy = modifiedBy;
     }
 
-    public LocalDateTime getModifiedDate() {
+    public LocalDate getModifiedDate() {
         return modifiedDate;
     }
 
-    public void setModifiedDate(LocalDateTime modifiedDate) {
+    public void setModifiedDate(LocalDate modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 

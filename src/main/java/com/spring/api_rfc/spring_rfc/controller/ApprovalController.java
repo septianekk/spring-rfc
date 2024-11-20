@@ -21,10 +21,9 @@ public class ApprovalController {
 
     @GetMapping("/approvals")
     public ResponseEntity<List<TblRequestRfc>> getApprovals(
-            @RequestParam String approvalCode,
-            @RequestParam String status
+            @RequestParam String approvalCode
     ) {
-        List<TblRequestRfc> users = tblRequestRfcService.getApprovals(approvalCode,status);
+        List<TblRequestRfc> users = tblRequestRfcService.getApprovals(approvalCode);
         return ResponseEntity.ok(users);
 
     }

@@ -30,7 +30,7 @@ public class TiketController {
             @RequestParam String assignCode,
             @RequestParam String status
     ) {
-        List<TblRequestRfc> requestRfcs = tblRequestRfcService.getTikets(assignCode,status);
+        List<TblRequestRfc> requestRfcs = tblRequestRfcService.getTikets(assignCode);
         return ResponseEntity.ok(requestRfcs);
     }
 

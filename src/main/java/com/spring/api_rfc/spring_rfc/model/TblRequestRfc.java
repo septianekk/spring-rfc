@@ -3,8 +3,10 @@ package com.spring.api_rfc.spring_rfc.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -40,11 +42,11 @@ public class TblRequestRfc {
 
     @Column(name = "Tgl_Request",insertable = true,updatable = false)
     private Date tglRequest;
-    @Column(name = "Tgl_Execute",insertable = false)
+    @Column(name = "Tgl_Execute",insertable = true,updatable = false)
     private Date tglExecute;
 
 
-    @Column(name = "Tgl_Estimasi", insertable = false)
+    @Column(name = "Tgl_Estimasi",insertable = true,updatable = false)
     private Date tglEstimasi;
     @Column(name = "Assign_Code", length = 20)
     private String assignCode;
@@ -111,9 +113,18 @@ public class TblRequestRfc {
         this.validateName = validateName;
     }
 
-    @CreationTimestamp
+    @UpdateTimestamp
     @Column(name = "Modified_Date",insertable = false,updatable = true)
-    private Date modifiedDate;
+    private LocalDate modifiedDate;
+
+    public LocalDate getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(LocalDate modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
     @Column(name = "ModifiedBy", length = 50)
     private String modifiedBy;
     @CreationTimestamp
@@ -377,13 +388,7 @@ public class TblRequestRfc {
         this.validateNote = validateNote;
     }
 
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
 
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
 
     public String getModifiedBy() {
         return modifiedBy;

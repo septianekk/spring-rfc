@@ -17,6 +17,26 @@ public class TblRequestRfcDTO {
     private Date tglRequest;
     private String status;
 
+    public String getKeteranganTambahan2() {
+        return keteranganTambahan2;
+    }
+
+    public void setKeteranganTambahan2(String keteranganTambahan2) {
+        this.keteranganTambahan2 = keteranganTambahan2;
+    }
+
+    private String keteranganTambahan2;
+
+    public String getRuangLingkup() {
+        return ruangLingkup;
+    }
+
+    public void setRuangLingkup(String ruangLingkup) {
+        this.ruangLingkup = ruangLingkup;
+    }
+
+    private String ruangLingkup;
+
     public Long getRequestId() {
         return requestId;
     }
