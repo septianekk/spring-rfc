@@ -46,15 +46,15 @@ public class TblRequestRfc {
 
     @Column(name = "Tgl_Estimasi", insertable = false)
     private Date tglEstimasi;
-    @Column(name = "Assign_Code", length = 8)
+    @Column(name = "Assign_Code", length = 20)
     private String assignCode;
     @Column(name = "Assign_Name", length = 50)
     private String assignName;
-    @Column(name = "Progremmer_Code", length = 8)
+    @Column(name = "Progremmer_Code", length = 20)
     private String programmerCode;
     @Column(name = "Programmer_Name", length = 100)
     private String programmerName;
-    @Column(name = "SQA_Code", length = 8)
+    @Column(name = "SQA_Code", length = 20)
     private String sqaCode;
     @Column(name = "SQA_Name", length = 50)
     private String sqaName;
@@ -78,7 +78,7 @@ public class TblRequestRfc {
     private String buktiSsAfter;
     @Column(name = "Status", length = 20)
     private String status;
-    @Column(name = "Approval_Code", length = 8)
+    @Column(name = "Approval_Code", length = 20)
     private String approvalCode;
     @Column(name = "Approval_Name", length = 50)
     private String approvalName;
