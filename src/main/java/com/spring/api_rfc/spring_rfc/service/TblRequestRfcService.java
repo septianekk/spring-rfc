@@ -85,6 +85,32 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
         return GlobalFunction.dataSuccesRejected(request);
     }
 
+    public ResponseEntity<Object> signToSqa(Long id, ValidateDto validateDto, HttpServletRequest request) throws Exception {
+        Optional<TblRequestRfc> optionalRequest = tblRequestRfcRepository.findById(id);
+        if (!optionalRequest.isPresent()) {
+            return GlobalFunction.dataNotFound(request);
+        }
+        try {
+            TblRequestRfc requestRfc = optionalRequest.get();
+
+            requestRfc.setStatus(validateDto.getStatus());
+            requestRfc.setSqaCode(validateDto.getSqaCode());
+            requestRfc.setSqaName(validateDto.getSqaName());
+            requestRfc.setModifiedBy(validateDto.getModifiedBy());
+            requestRfc.setModifiedDate(LocalDate.now());
+            TblRequestRfc updatedRequest = tblRequestRfcRepository.save(requestRfc);
+
+            TblRfcLogs log = new TblRfcLogs();
+            log.setRequestId(id);
+            log.setStatus(validateDto.getStatus());
+            log.setCreatedBy(validateDto.getModifiedBy());
+            tblRequestRfcLogRepository.save(log);
+        } catch (Exception e) {
+            return GlobalFunction.failedToChange("FE001001011", request);
+        }
+        return GlobalFunction.dataSuccesRejected(request);
+    }
+
     @Override
     public ResponseEntity<Object> update(Long id, TblRequestRfc tblRequestRfc, HttpServletRequest request) {
         return null;
@@ -215,6 +241,11 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
 //        return tblRequestRfcRepository.findByAssignCodeAndStatus(assignCode,status);
     }
 
+    public List<TblRequestRfc> getAssignCodeAndStatus(String assignCode, String status) {
+        return tblRequestRfcRepository.findByAssignCodeAndStatus(assignCode, status);
+//        return tblRequestRfcRepository.findByAssignCodeAndStatus(assignCode,status);
+    }
+
     public List<TblRequestRfc> getListRequestByCreatedBy(String createdBy) {
 
         return tblRequestRfcRepository.findByCreatedBy(createdBy);
@@ -242,6 +273,8 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
         }
         return GlobalFunction.dataHasChanged(request);
     }
+
+
 
     public Map<String, Object> getRfcSummary(String assignCode) {
         return tblRequestRfcRepository.getRfcSummary(assignCode);

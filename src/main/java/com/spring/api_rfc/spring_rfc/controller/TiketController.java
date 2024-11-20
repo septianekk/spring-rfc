@@ -2,6 +2,7 @@ package com.spring.api_rfc.spring_rfc.controller;
 
 import com.spring.api_rfc.spring_rfc.dto.ApprovalDto;
 import com.spring.api_rfc.spring_rfc.dto.SignProgrammer;
+import com.spring.api_rfc.spring_rfc.dto.ValidateDto;
 import com.spring.api_rfc.spring_rfc.model.TblRequestRfc;
 import com.spring.api_rfc.spring_rfc.model.User;
 import com.spring.api_rfc.spring_rfc.service.TblRequestRfcService;
@@ -34,6 +35,15 @@ public class TiketController {
         return ResponseEntity.ok(requestRfcs);
     }
 
+    @GetMapping("/tikets/assign_status")
+    public ResponseEntity<List<TblRequestRfc>> getAssignCodeAndStatus(
+            @RequestParam String assignCode,
+            @RequestParam String status
+    ) {
+        List<TblRequestRfc> requestRfcs = tblRequestRfcService.getAssignCodeAndStatus(assignCode,status);
+        return ResponseEntity.ok(requestRfcs);
+    }
+
     @GetMapping("/tiket/{requestId}")
     public ResponseEntity<Object> findById(@PathVariable(value = "requestId") Long requestId, HttpServletRequest request) {
         return ResponseEntity.ok(tblRequestRfcService.findById(requestId, request));
@@ -55,6 +65,20 @@ public class TiketController {
     ) {
         try {
             tblRequestRfcService.signProgammer(id, signProgrammer, request);
+
+            return GlobalFunction.dataHasChanged(request);
+        } catch (Exception e) {
+
+            return GlobalFunction.dataFailedToSave(e.getMessage(), request);
+        }
+    }
+
+    @PutMapping("/tiket/signtosqa/{id}")
+    public ResponseEntity<?> updateSignToSqa(
+            @PathVariable("id") Long id, @Valid @RequestBody ValidateDto validateDto, HttpServletRequest request
+    ) {
+        try {
+            tblRequestRfcService.signToSqa(id, validateDto, request);
 
             return GlobalFunction.dataHasChanged(request);
         } catch (Exception e) {

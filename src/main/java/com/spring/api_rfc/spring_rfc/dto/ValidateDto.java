@@ -12,6 +12,24 @@ public class ValidateDto {
     private String validateNote;
     private String createdBy;
     private String modifiedBy;
+    private String sqaCode;
+    private String sqaName;
+
+    public String getSqaCode() {
+        return sqaCode;
+    }
+
+    public void setSqaCode(String sqaCode) {
+        this.sqaCode = sqaCode;
+    }
+
+    public String getSqaName() {
+        return sqaName;
+    }
+
+    public void setSqaName(String sqaName) {
+        this.sqaName = sqaName;
+    }
 
     public LocalDateTime getModifiedDate() {
         return modifiedDate;
