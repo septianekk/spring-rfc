@@ -42,17 +42,17 @@ public class TblRequestRfc {
 
     @Column(name = "Tgl_Request",insertable = true,updatable = false)
     private Date tglRequest;
-    @Column(name = "Tgl_Execute",insertable = true,updatable = false)
+    @Column(name = "Tgl_Execute",updatable = true)
     private Date tglExecute;
 
 
-    @Column(name = "Tgl_Estimasi",insertable = true,updatable = false)
+    @Column(name = "Tgl_Estimasi",updatable = true)
     private Date tglEstimasi;
     @Column(name = "Assign_Code", length = 20)
     private String assignCode;
     @Column(name = "Assign_Name", length = 50)
     private String assignName;
-    @Column(name = "Progremmer_Code", length = 20)
+    @Column(name = "Programmer_Code", length = 20)
     private String programmerCode;
     @Column(name = "Programmer_Name", length = 100)
     private String programmerName;

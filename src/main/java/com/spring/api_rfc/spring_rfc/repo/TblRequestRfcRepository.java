@@ -23,6 +23,9 @@ public interface TblRequestRfcRepository extends JpaRepository<TblRequestRfc, Lo
 
     @Query("select u from TblRequestRfc u where u.assignCode = ?1 and u.status in ('APPROVED', 'ON PROGRESS','COMPLETED','REJECT VALIDATED','REJECT APPROVAL')")
     List<TblRequestRfc> findByAssignCode(String assignCode);
+
+    List<TblRequestRfc> findByAssignCodeAndStatus(String assignCode, String status);
+
     List<TblRequestRfc> findByCreatedBy(String createdBy);
 //    List<TblRequestRfc> findByAssignCode(String assignCode);
 

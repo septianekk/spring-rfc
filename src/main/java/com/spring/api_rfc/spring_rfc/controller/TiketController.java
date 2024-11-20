@@ -34,6 +34,15 @@ public class TiketController {
         return ResponseEntity.ok(requestRfcs);
     }
 
+    @GetMapping("/tikets/assign_status")
+    public ResponseEntity<List<TblRequestRfc>> getAssignCodeAndStatus(
+            @RequestParam String assignCode,
+            @RequestParam String status
+    ) {
+        List<TblRequestRfc> requestRfcs = tblRequestRfcService.getAssignCodeAndStatus(assignCode,status);
+        return ResponseEntity.ok(requestRfcs);
+    }
+
     @GetMapping("/tiket/{requestId}")
     public ResponseEntity<Object> findById(@PathVariable(value = "requestId") Long requestId, HttpServletRequest request) {
         return ResponseEntity.ok(tblRequestRfcService.findById(requestId, request));

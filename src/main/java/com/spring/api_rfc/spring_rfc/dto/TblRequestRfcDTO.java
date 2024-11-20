@@ -15,7 +15,80 @@ public class TblRequestRfcDTO {
     private String alasanPerubahan;
     private String dampak;
     private Date tglRequest;
+    private Date tglEstimasi;
+    private Date tglExecute;
+
+    public String getSqaCode() {
+        return sqaCode;
+    }
+
+    public void setSqaCode(String sqaCode) {
+        this.sqaCode = sqaCode;
+    }
+
+    public String getSqaName() {
+        return sqaName;
+    }
+
+    public void setSqaName(String sqaName) {
+        this.sqaName = sqaName;
+    }
+
+    private String sqaCode;
+    private String sqaName;
+    public String getProgrammerCode() {
+        return programmerCode;
+    }
+
+    public void setProgrammerCode(String programmerCode) {
+        this.programmerCode = programmerCode;
+    }
+
+    public String getProgrammerName() {
+        return programmerName;
+    }
+
+    public void setProgrammerName(String programmerName) {
+        this.programmerName = programmerName;
+    }
+
+    private String programmerCode;
+    private String programmerName;
+    public String getLingkupTerdampak() {
+        return lingkupTerdampak;
+    }
+
+    public void setLingkupTerdampak(String lingkupTerdampak) {
+        this.lingkupTerdampak = lingkupTerdampak;
+    }
+
+    private String lingkupTerdampak;
+    public Date getTglExecute() {
+        return tglExecute;
+    }
+
+    public void setTglExecute(Date tglExecute) {
+        this.tglExecute = tglExecute;
+    }
+
+    public Date getTglEstimasi() {
+        return tglEstimasi;
+    }
+
+    public void setTglEstimasi(Date tglEstimasi) {
+        this.tglEstimasi = tglEstimasi;
+    }
+
     private String status;
+    private String prioritasPengerjaan;
+
+    public String getPrioritasPengerjaan() {
+        return prioritasPengerjaan;
+    }
+
+    public void setPrioritasPengerjaan(String prioritasPengerjaan) {
+        this.prioritasPengerjaan = prioritasPengerjaan;
+    }
 
     public String getKeteranganTambahan2() {
         return keteranganTambahan2;

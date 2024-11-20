@@ -215,6 +215,11 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
 //        return tblRequestRfcRepository.findByAssignCodeAndStatus(assignCode,status);
     }
 
+    public List<TblRequestRfc> getAssignCodeAndStatus(String assignCode, String status) {
+        return tblRequestRfcRepository.findByAssignCodeAndStatus(assignCode, status);
+//        return tblRequestRfcRepository.findByAssignCodeAndStatus(assignCode,status);
+    }
+
     public List<TblRequestRfc> getListRequestByCreatedBy(String createdBy) {
 
         return tblRequestRfcRepository.findByCreatedBy(createdBy);
