@@ -15,9 +15,16 @@ import java.util.Optional;
 @Repository
 public interface TblRequestRfcRepository extends JpaRepository<TblRequestRfc, Long> {
     List<TblRequestRfc> findByStatus(String Status);
-    List<TblRequestRfc> findByApprovalCodeAndStatus(String approvalCode, String status);
-    List<TblRequestRfc> findByAssignCodeAndStatus(String assignCode, String status);
+    @Query("select u from TblRequestRfc u where u.approvalCode = ?1 and u.status in ('NEW', 'REJECT APPROVAL')")
+    List<TblRequestRfc> findByApprovalCode(String approvalCode);
+
+    @Query("select u from TblRequestRfc u where u.approvalCode = ?1 and u.status in ('APPROVED', 'ON PROGRESS','COMPLETED','REJECT VALIDATED','REJECT APPROVAL')")
+    List<TblRequestRfc> findByApprovalCodeAndStatusApproved(String approvalCode);
+
+    @Query("select u from TblRequestRfc u where u.assignCode = ?1 and u.status in ('APPROVED', 'ON PROGRESS','COMPLETED','REJECT VALIDATED','REJECT APPROVAL')")
+    List<TblRequestRfc> findByAssignCode(String assignCode);
     List<TblRequestRfc> findByCreatedBy(String createdBy);
+//    List<TblRequestRfc> findByAssignCode(String assignCode);
 
     @Query(value = """
         SELECT

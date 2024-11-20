@@ -61,6 +61,22 @@ public class TblRequestRfcController {
         return ResponseEntity.ok(requestRfcs);
     }
 
+    @GetMapping("/req/assign")
+    public ResponseEntity<List<TblRequestRfc>> getAssignCode(
+            @RequestParam String assignCode
+    ) {
+        List<TblRequestRfc> requestRfcs = tblRequestRfcService.getListRequestByAssignCode(assignCode);
+        return ResponseEntity.ok(requestRfcs);
+    }
+
+    @GetMapping("/req/approval_code_and_status")
+    public ResponseEntity<List<TblRequestRfc>> getApprovalCodeAndStatus(
+            @RequestParam String approvalCode
+    ) {
+        List<TblRequestRfc> requestRfcs = tblRequestRfcService.getApprovalStatusApproved(approvalCode);
+        return ResponseEntity.ok(requestRfcs);
+    }
+
     @GetMapping("/summary")
     public ResponseEntity<?> getRfcSummary(@RequestParam("assignCode") String assignCode) {
         Map<String, Object> result = tblRequestRfcService.getRfcSummary(assignCode);
