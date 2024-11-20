@@ -190,7 +190,7 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
             requestRfc.setValidateName(submitValidateDto.getValidateName());
             requestRfc.setModifiedBy(submitValidateDto.getModifiedBy());
             requestRfc.setModifiedDate(new Date());
-            TblRequestRfc updatedRequest = tblRequestRfcRepository.save(requestRfc);
+            tblRequestRfcRepository.save(requestRfc);
 
             TblRfcLogs log = new TblRfcLogs();
             log.setRequestId(id);
