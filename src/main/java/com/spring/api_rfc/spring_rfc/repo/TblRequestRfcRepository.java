@@ -27,6 +27,8 @@ public interface TblRequestRfcRepository extends JpaRepository<TblRequestRfc, Lo
     List<TblRequestRfc> findByAssignCodeAndStatus(String assignCode, String status);
 
     List<TblRequestRfc> findByCreatedBy(String createdBy);
+
+    List<TblRequestRfc> findByValidateCode(String validateCode);
 //    List<TblRequestRfc> findByAssignCode(String assignCode);
 
     @Query(value = """

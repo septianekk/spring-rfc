@@ -255,6 +255,11 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
         return tblRequestRfcRepository.findByAssignCode(assignCode);
     }
 
+    public List<TblRequestRfc> getListRequestByValidateCode(String validateCode) {
+
+        return tblRequestRfcRepository.findByValidateCode(validateCode);
+    }
+
     public ResponseEntity<Object> signProgammer(Long id, SignProgrammer signProgrammer, HttpServletRequest request) throws Exception {
         Optional<TblRequestRfc> optionalRequest = tblRequestRfcRepository.findById(id);
         if (!optionalRequest.isPresent()) {

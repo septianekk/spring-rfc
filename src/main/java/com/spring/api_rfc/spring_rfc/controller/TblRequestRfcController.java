@@ -78,6 +78,14 @@ public class TblRequestRfcController {
         return ResponseEntity.ok(requestRfcs);
     }
 
+    @GetMapping("/req/validate")
+    public ResponseEntity<List<TblRequestRfc>> getValidateCode(
+            @RequestParam String validateCode
+    ) {
+        List<TblRequestRfc> requestRfcs = tblRequestRfcService.getListRequestByValidateCode(validateCode);
+        return ResponseEntity.ok(requestRfcs);
+    }
+
     @GetMapping("/summary")
     public ResponseEntity<?> getRfcSummary(@RequestParam("assignCode") String assignCode) {
         Map<String, Object> result = tblRequestRfcService.getRfcSummary(assignCode);
