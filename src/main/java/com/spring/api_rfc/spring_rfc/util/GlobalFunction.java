@@ -8,7 +8,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GlobalFunction {
 
@@ -164,6 +166,13 @@ public class GlobalFunction {
         return mapper.writeValueAsString(object);
     }
 
+    public static ResponseEntity<Object> success(Object object, HttpServletRequest request) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", 200);
+        response.put("message", "Summary fetched successfully");
+        response.put("data", object);
 
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
 }

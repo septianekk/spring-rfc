@@ -1,6 +1,7 @@
 package com.spring.api_rfc.spring_rfc.controller;
 
 
+import com.spring.api_rfc.spring_rfc.dto.StatusCountDTO;
 import com.spring.api_rfc.spring_rfc.model.RefSystem;
 import com.spring.api_rfc.spring_rfc.model.TblRequestRfc;
 import com.spring.api_rfc.spring_rfc.repo.TblRequestRfcLogRepository;
@@ -87,5 +88,16 @@ public class TblRequestRfcController {
         ));
     }
 
+    @GetMapping("/dashboard/status")
+    public ApiResponse<List<StatusCountDTO>> getStatus(
+            @RequestParam String nik,
+            @RequestParam String privilege) {
+        List<StatusCountDTO> data = tblRequestRfcService.getStatus(nik, privilege);
+        return new ApiResponse<>(200, "Summary fetched successfully", data);
+    }
 
+    @GetMapping("/dashboard/tasks")
+    public List<Map<String, Object>> getTasks(@RequestParam String nik, @RequestParam String privilege) {
+        return tblRequestRfcService.getTasks(nik, privilege);
+    }
 }
