@@ -15,7 +15,7 @@ import java.util.Optional;
 @Repository
 public interface TblRequestRfcRepository extends JpaRepository<TblRequestRfc, Long> {
     List<TblRequestRfc> findByStatus(String Status);
-    @Query("select u from TblRequestRfc u where u.approvalCode = ?1 and u.status in ('NEW', 'REJECT APPROVAL')")
+    @Query("select u from TblRequestRfc u where u.approvalCode = ?1 and u.status ='NEW'")
     List<TblRequestRfc> findByApprovalCode(String approvalCode);
 
     @Query("select u from TblRequestRfc u where u.approvalCode = ?1 and u.status in ('APPROVED', 'ON PROGRESS','COMPLETED','REJECT VALIDATED','REJECT APPROVAL')")
