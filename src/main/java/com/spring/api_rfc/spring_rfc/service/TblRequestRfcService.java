@@ -1,9 +1,6 @@
 package com.spring.api_rfc.spring_rfc.service;
 
-import com.spring.api_rfc.spring_rfc.dto.ApprovalDto;
-import com.spring.api_rfc.spring_rfc.dto.SignProgrammer;
-import com.spring.api_rfc.spring_rfc.dto.SubmitValidateDto;
-import com.spring.api_rfc.spring_rfc.dto.ValidateDto;
+import com.spring.api_rfc.spring_rfc.dto.*;
 import com.spring.api_rfc.spring_rfc.model.TblRfcLogs;
 import com.spring.api_rfc.spring_rfc.repo.TblRequestRfcLogRepository;
 import com.spring.api_rfc.spring_rfc.validasi.TblRequestRfcValidasi;
@@ -42,6 +39,7 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
         if (tblRequestRfc==null){
             return GlobalFunction.validatiFailed("Object null", "FV001001001", request);
         }
+
         try {
             TblRequestRfc savedRequest = tblRequestRfcRepository.save(tblRequestRfc);
             TblRfcLogs log = new TblRfcLogs();
@@ -51,6 +49,7 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
             log.setCreatedBy(savedRequest.getCreatedBy()); // Assuming you have logged-in user
             tblRequestRfcLogRepository.save(log);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             GlobalFunction.dataFailedToSave("FE001001001", request);
         }
         return GlobalFunction.dataHasSaved(request);
@@ -275,11 +274,93 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
     }
 
 
-
     public Map<String, Object> getRfcSummary(String assignCode) {
         return tblRequestRfcRepository.getRfcSummary(assignCode);
     }
 
+    public List<StatusCountDTO> getStatus(String nik, String privilege) {
+        List<Object[]> result;
+
+        if (privilege.equals("3")) {
+            result = tblRequestRfcRepository.getStatusForSPV(nik);
+        } else if (privilege.equals("4")) {
+            result = tblRequestRfcRepository.getStatusForManager(nik);
+        } else {
+            throw new IllegalArgumentException("Invalid privilege");
+        }
+
+        List<StatusCountDTO> statusCounts = new ArrayList<>();
+
+        // Inisialisasi status yang akan dimasukkan
+        List<String> statuses = List.of("COMPLETED", "ON PROGRESS", "VALIDATED");
+
+        for (String status : statuses) {
+            StatusCountDTO dto = new StatusCountDTO();
+            dto.setStatus(status);
+            dto.setCountPending(0);
+            dto.setCountOnprogress(0);
+            dto.setCountCompleted(0);
+
+            // Mengisi nilai berdasarkan hasil query
+            for (Object[] row : result) {
+                String rowStatus = (String) row[0];
+                if (status.equals(rowStatus)) {
+                    if ("ON PROGRESS".equals(status)) {
+                        dto.setCountOnprogress(((Number) row[2]).intValue());
+                    } else if ("COMPLETED".equals(status)) {
+                        dto.setCountCompleted(((Number) row[3]).intValue());
+                    } else {
+                        dto.setCountPending(((Number) row[1]).intValue());
+                    }
+                }
+            }
+
+            statusCounts.add(dto);
+        }
+
+        return statusCounts;
+    }
+
+    public List<Map<String, Object>> getTasks(String nik, String privilege) {
+//        List<Map<String, Object>> result = new ArrayList<>();
+
+        List<Object[]> tasks;
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        if (privilege.equals("3")) {
+            tasks = tblRequestRfcRepository.getTasksForSPV(nik);
+
+            // Convert Object[] to Map for easier manipulation and response
+            for (Object[] task : tasks) {
+                Map<String, Object> taskMap = new LinkedHashMap<>();
+                taskMap.put("Programmer_Code", task[0]);
+                taskMap.put("Programmer_Name", task[1]);
+                taskMap.put("jml", task[2]);
+                taskMap.put("onprogress", task[3]);
+                taskMap.put("completed", task[4]);
+
+                result.add(taskMap);
+            }
+        } else if (privilege.equals("4")) {
+            tasks = tblRequestRfcRepository.getTasksForManager(nik);
+
+            // Convert Object[] to Map for easier manipulation and response
+            for (Object[] task : tasks) {
+                Map<String, Object> taskMap = new LinkedHashMap<>();
+                taskMap.put("Assign_Code", task[0]);
+                taskMap.put("Assign_Name", task[1]);
+                taskMap.put("jml", task[2]);
+                taskMap.put("onprogress", task[3]);
+                taskMap.put("completed", task[4]);
+
+                result.add(taskMap);
+            }
+        } else {
+            throw new IllegalArgumentException("Invalid privilege");
+        }
+
+        return result;
+    }
 
     public TblRequestRfc convertToEntity(TblRequestRfcValidasi tblRequestRfcValidasi){
         return modelMapper.map(tblRequestRfcValidasi, TblRequestRfc.class);

@@ -38,4 +38,52 @@ public interface TblRequestRfcRepository extends JpaRepository<TblRequestRfc, Lo
         WHERE Assign_Code = :assignCode
     """, nativeQuery = true)
     Map<String, Object> getRfcSummary(@Param("assignCode") String assignCode);
+
+    // Untuk SPV
+    @Query(value = """
+        SELECT Status,
+               SUM(CASE WHEN Status = 'ON PROGRESS' AND Programmer_Code IS NULL THEN 1 ELSE 0 END) AS count_pending,
+               SUM(CASE WHEN Status = 'ON PROGRESS' AND Programmer_Code IS NOT NULL THEN 1 ELSE 0 END) AS count_onprogress,
+               SUM(CASE WHEN Status = 'COMPLETED' THEN 1 ELSE 0 END) AS count_completed
+        FROM tbl_request_rfc
+        WHERE Assign_Code = :nik
+        GROUP BY Status
+    """, nativeQuery = true)
+    List<Object[]> getStatusForSPV(@Param("nik") String nik);
+
+    // Untuk Manager
+    @Query(value = """
+        SELECT Status,
+               SUM(CASE WHEN Status = 'VALIDATED' AND Assign_Code IS NULL THEN 1 ELSE 0 END) AS count_pending,
+               SUM(CASE WHEN Status = 'ON PROGRESS' THEN 1 ELSE 0 END) AS count_onprogress,
+               SUM(CASE WHEN Status = 'COMPLETED' THEN 1 ELSE 0 END) AS count_completed
+        FROM tbl_request_rfc
+        WHERE validate_code = :nik
+        GROUP BY Status
+    """, nativeQuery = true)
+    List<Object[]> getStatusForManager(@Param("nik") String nik);
+
+    // Untuk SPV
+    @Query(value = """
+        SELECT Programmer_Code, Programmer_Name, COUNT(Request_ID) AS jml,
+               SUM(CASE WHEN Status = 'ON PROGRESS' AND Programmer_Code IS NOT NULL THEN 1 ELSE 0 END) AS onprogress,
+               SUM(CASE WHEN Status = 'COMPLETED' THEN 1 ELSE 0 END) AS completed
+        FROM tbl_request_rfc
+        WHERE Assign_Code = :nik
+          AND Programmer_Code IS NOT NULL
+        GROUP BY Programmer_Code, Programmer_Name
+    """, nativeQuery = true)
+    List<Object[]> getTasksForSPV(@Param("nik") String nik);
+
+    // Untuk Manager
+    @Query(value = """
+        SELECT Assign_Code, Assign_Name, COUNT(Request_ID) AS jml,
+               SUM(CASE WHEN Status = 'ON PROGRESS' THEN 1 ELSE 0 END) AS onprogress,
+               SUM(CASE WHEN Status = 'COMPLETED' THEN 1 ELSE 0 END) AS completed
+        FROM tbl_request_rfc
+        WHERE validate_code = :nik
+        GROUP BY Assign_Code, Assign_Name
+    """, nativeQuery = true)
+    List<Object[]> getTasksForManager(@Param("nik") String nik);
+
 }
