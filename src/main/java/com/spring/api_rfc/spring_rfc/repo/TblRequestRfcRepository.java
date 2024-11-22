@@ -88,4 +88,19 @@ public interface TblRequestRfcRepository extends JpaRepository<TblRequestRfc, Lo
     """, nativeQuery = true)
     List<Object[]> getTasksForManager(@Param("nik") String nik);
 
+    @Query(value = """
+            SELECT * 
+            FROM tbl_request_rfc 
+            WHERE Created_Date BETWEEN :startDate AND :endDate 
+              AND (:privilege = '3' AND Assign_Code = :nik OR :privilege = '4') 
+              AND (:status = 'ALL' AND Status IN :statuses OR Status = :status) 
+            ORDER BY Created_Date DESC
+            """, nativeQuery = true)
+    List<TblRequestRfc> getRequests(
+            @Param("startDate") String startDate,
+            @Param("endDate") String endDate,
+            @Param("nik") String nik,
+            @Param("privilege") String privilege,
+            @Param("status") String status,
+            @Param("statuses") List<String> statuses);
 }
