@@ -108,4 +108,16 @@ public class TblRequestRfcController {
     public List<Map<String, Object>> getTasks(@RequestParam String nik, @RequestParam String privilege) {
         return tblRequestRfcService.getTasks(nik, privilege);
     }
+
+    @GetMapping("/req/report")
+    public ApiResponse<List<TblRequestRfc>> getRequests(
+            @RequestParam String startDate,
+            @RequestParam String endDate,
+            @RequestParam String nik,
+            @RequestParam String privilege,
+            @RequestParam(required = false, defaultValue = "ALL") String status) {
+
+        List<TblRequestRfc> requests = tblRequestRfcService.getReport(startDate, endDate, nik, privilege, status);
+        return new ApiResponse<>(200, "Requests fetched successfully", requests);
+    }
 }

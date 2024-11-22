@@ -260,6 +260,28 @@ public class TblRequestRfcService implements IService<TblRequestRfc> {
         return tblRequestRfcRepository.findByValidateCode(validateCode);
     }
 
+    public List<TblRequestRfc> getReport(
+            String startDate,
+            String endDate,
+            String nik,
+            String privilege,
+            String status) {
+
+        List<String> statuses = new ArrayList<>();
+        if (privilege.equals("3")) {
+            statuses = Arrays.asList("VALIDATED", "ON PROGRESS", "COMPLETED");
+        } else if (privilege.equals("4")) {
+            statuses = Arrays.asList("APPROVED", "VALIDATED", "ON PROGRESS", "COMPLETED");
+        }
+
+        return tblRequestRfcRepository.getRequests(startDate + " 00:00:01",
+                endDate + " 23:59:59",
+                nik,
+                privilege,
+                status,
+                statuses);
+    }
+
     public ResponseEntity<Object> signProgammer(Long id, SignProgrammer signProgrammer, HttpServletRequest request) throws Exception {
         Optional<TblRequestRfc> optionalRequest = tblRequestRfcRepository.findById(id);
         if (!optionalRequest.isPresent()) {
